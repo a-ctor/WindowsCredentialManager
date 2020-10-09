@@ -77,6 +77,11 @@ namespace WindowsCredentialManager
       return result;
     }
 
+    public bool Delete()
+    {
+      return CredDeleteW (TargetName, Type.ConvertToApiEnum(), default);
+    }
+
     public void Save()
     {
       var freeObjects = new List<IntPtr>();

@@ -44,6 +44,25 @@ namespace WindowsCredentialManager.Tests
 
     [Explicit]
     [Test]
+    public void RemoveCredentialsTest()
+    {
+      var genericCredentials = new GenericCredentials ("CRED_TEST");
+
+      genericCredentials.UserName = "my user";
+      genericCredentials.Password = new SecureString();
+      genericCredentials.Password.AppendChar ('a');
+      genericCredentials.Password.AppendChar ('a');
+      genericCredentials.Password.AppendChar ('a');
+      genericCredentials.Password.AppendChar ('a');
+      genericCredentials.Attributes.Add (new CredentialAttribute ("a", "a1"));
+      genericCredentials.Attributes.Add (new CredentialAttribute ("b", ""));
+
+      Assert.That (() => genericCredentials.Save(), Throws.Nothing);
+      Assert.That (genericCredentials.Delete(), Is.True);
+    }
+
+    [Explicit]
+    [Test]
     public void PromptCredentialsTest()
     {
       var credentialsPromptResult = CredentialsPrompt.ShowWithSaveButton ("a", "b", true);

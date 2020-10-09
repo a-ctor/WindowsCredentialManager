@@ -18,6 +18,13 @@ namespace WindowsCredentialManager.Win32
       out CredentialSafeHandle credential);
 
     [DllImport ("Advapi32.dll")]
+    public static extern bool CredDeleteW (
+      [MarshalAs (UnmanagedType.LPWStr)] string targetName,
+      CREDENTIAL_TYPE type,
+      int flags // use 0 only
+    );
+
+    [DllImport ("Advapi32.dll")]
     public static extern void CredFree (CREDENTIALW_RAW* buffer);
 
     [DllImport ("Credui.dll", SetLastError = true, CallingConvention = CallingConvention.StdCall)]
