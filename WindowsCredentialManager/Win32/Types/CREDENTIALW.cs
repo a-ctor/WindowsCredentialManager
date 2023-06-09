@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.ComTypes;
+
 namespace WindowsCredentialManager.Win32.Types
 {
   using System;
@@ -10,7 +12,7 @@ namespace WindowsCredentialManager.Win32.Types
     public CREDENTIAL_TYPE Type;
     [MarshalAs (UnmanagedType.LPWStr)] public string TargetName;
     [MarshalAs (UnmanagedType.LPWStr)] public string? Comment;
-    public DateTimeOffset LastWritten;
+    public FILETIME LastWritten;
     public int BlobSize;
     public SecureBlob? Blob;
     public CREDENTIAL_PERSIST Persist;
