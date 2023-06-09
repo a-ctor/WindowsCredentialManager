@@ -12,6 +12,7 @@ namespace WindowsCredentialManager
 
   public abstract class Credential
   {
+    private const int WindowsCredentialManagerMaxSize = 2560;
     public string TargetName { get; }
 
     internal CredentialType Type { get; }
@@ -106,6 +107,11 @@ namespace WindowsCredentialManager
 
         blob = credentialW.Blob;
         credentialW.BlobSize = blob?.Size ?? 0;
+
+        if (credentialW.BlobSize > WindowsCredentialManagerMaxSize)
+        {
+          throw new ArgumentException("Secret is too big for Windows Credential Manager");
+        }
 
         Debug.Assert (credentialW.Type != default, "credentialW.Type != default");
         Debug.Assert (credentialW.TargetName != null, "credentialW.TargetName != null");

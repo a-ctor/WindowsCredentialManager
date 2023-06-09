@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace WindowsCredentialManager.Tests
 {
   using System.Runtime.InteropServices;
@@ -68,6 +70,22 @@ namespace WindowsCredentialManager.Tests
       var credentialsPromptResult = CredentialsPrompt.ShowWithSaveButton ("a", "b", true);
 
       Assert.That (credentialsPromptResult, Is.Not.Null);
+    }
+
+    [Test]
+    public void ArgumentExceptionThrownWhenSecretIsTooBig()
+    {
+      var genericCredentials = new GenericCredentials ("CRED_TEST");
+
+      genericCredentials.UserName = "my user";
+      genericCredentials.Password = new SecureString();
+
+      for (var i = 0; i < 2561; i++)
+      {
+        genericCredentials.Password.AppendChar('x');
+      }
+
+      Assert.That(() => genericCredentials.Save(), Throws.ArgumentException);
     }
 
     private static string SecureStringToString (SecureString value)
